@@ -26,7 +26,7 @@ class ECGPredictionListCreateView(generics.ListCreateAPIView):
         ecg_image = self.request.FILES.get('ecg_image')
 
         # Check if the logged-in user is allowed to create predictions for this patient
-        if patient.created_by != self.request.user:
+        if patient.doctor != self.request.user:
             raise serializers.ValidationError("You do not have permission to create predictions for this patient.")
 
         # Call FastAPI for prediction
