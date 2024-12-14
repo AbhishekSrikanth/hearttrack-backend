@@ -134,5 +134,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Session-based authentication settings
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+AUTH_USER_MODEL = 'users.CustomUser'
+
 
 FASTAPI_URL = f"http://{config('CL_HOST', 'classifier')}:{config('CL_PORT', 5000)}"
