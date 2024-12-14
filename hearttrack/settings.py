@@ -138,3 +138,7 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 
 FASTAPI_URL = f"http://{config('CL_HOST', 'classifier')}:{config('CL_PORT', 5000)}"
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
