@@ -47,7 +47,7 @@ class ECGPredictionListCreateView(generics.ListCreateAPIView):
             raise serializers.ValidationError("Failed to get prediction from classifier.")
 
         prediction_data = response.json()
-        prediction_result = CLASSES[prediction_data['prediction'][0].index(max(prediction_data['prediction'][0]))]
+        prediction_result = CLASSES[prediction_data['prediction'].index(max(prediction_data['prediction']))]
 
         # Save prediction result
         serializer.save(
