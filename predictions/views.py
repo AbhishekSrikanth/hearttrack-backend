@@ -19,7 +19,7 @@ class ECGPredictionListCreateView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         # Doctors can only view predictions they created for their patients
-        return self.queryset.filter(patient__created_by=self.request.user)
+        return self.queryset.filter(patient__doctor=self.request.user)
 
     def perform_create(self, serializer):
         patient = get_object_or_404(Patient, id=self.request.data.get('patient'))
@@ -57,4 +57,4 @@ class ECGPredictionRetrieveDeleteView(generics.RetrieveDestroyAPIView):
 
     def get_queryset(self):
         # Doctors can only access predictions they created for their patients
-        return self.queryset.filter(patient__created_by=self.request.user)
+        return self.queryset.filter(patient__doctor=self.request.user)
