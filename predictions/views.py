@@ -10,6 +10,8 @@ from patients.models import Patient
 from predictions.models import ECGPrediction
 from predictions.serializers import ECGPredictionSerializer
 
+CLASSES = ['N', 'S', 'V', 'F', 'Q']
+
 
 # Create, Retrieve, Delete APIs for ECGPrediction
 class ECGPredictionListCreateView(generics.ListCreateAPIView):
@@ -45,7 +47,7 @@ class ECGPredictionListCreateView(generics.ListCreateAPIView):
             raise serializers.ValidationError("Failed to get prediction from classifier.")
 
         prediction_data = response.json()
-        prediction_result = prediction_data['prediction'][0]
+        prediction_result = CLASSES[prediction_data['prediction'][0].index(max(prediction_data['prediction'][0]))]
 
         # Save prediction result
         serializer.save(
