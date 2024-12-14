@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.conf import settings
 from rest_framework import generics, permissions, serializers
 
-from users.permissions import IsDoctorUser
+from users.permissions import IsDoctor
 from patients.models import Patient
 from predictions.models import ECGPrediction
 from predictions.serializers import ECGPredictionSerializer
@@ -15,7 +15,7 @@ from predictions.serializers import ECGPredictionSerializer
 class ECGPredictionListCreateView(generics.ListCreateAPIView):
     queryset = ECGPrediction.objects.all()
     serializer_class = ECGPredictionSerializer
-    permission_classes = [permissions.IsAuthenticated, IsDoctorUser]
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
     def get_queryset(self):
         # Doctors can only view predictions they created for their patients
@@ -53,7 +53,7 @@ class ECGPredictionListCreateView(generics.ListCreateAPIView):
 class ECGPredictionRetrieveDeleteView(generics.RetrieveDestroyAPIView):
     queryset = ECGPrediction.objects.all()
     serializer_class = ECGPredictionSerializer
-    permission_classes = [permissions.IsAuthenticated, IsDoctorUser]
+    permission_classes = [permissions.IsAuthenticated, IsDoctor]
 
     def get_queryset(self):
         # Doctors can only access predictions they created for their patients
