@@ -1,30 +1,24 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group, Permission
 from django.db import models
 
 class CustomUser(AbstractUser):
-    """
-    Custom user model with email as the unique identifier
-    """
-    ROLES = (
-        ('admin', 'Admin'),
-        ('doctor', 'Doctor'),
+    DOCTOR = 'doctor'
+    ADMIN = 'admin'
+    ROLE_CHOICES = [
+        (DOCTOR, 'Doctor'),
+        (ADMIN, 'Admin'),
+    ]
+
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default=DOCTOR)
+
+    # Add related_name to resolve clashes
+    groups = models.ManyToManyField(
+        Group,
+        related_name="customuser_set",
+        blank=True
     )
-    role = models.CharField(max_length=10, choices=ROLES, default='doctor')
-
-    def is_admin(self)-> bool:
-        """
-        Check if the user is an admin
-
-        Returns:
-            bool: True if the user is an admin, False otherwise
-        """
-        return self.role == 'admin'
-
-    def is_doctor(self)-> bool:
-        """
-        Check if the user is a doctor
-
-        Returns:
-            bool: True if the user is a doctor, False otherwise
-        """
-        return self.role == 'doctor'
+    user_permissions = models.ManyToManyField(
+        Permission,
+        related_name="customuser_set",
+        blank=True
+    )
