@@ -31,8 +31,13 @@ class ECGPredictionListCreateView(generics.ListCreateAPIView):
 
         # Call FastAPI for prediction
         fastapi_url = settings.FASTAPI_URL + '/predict/'
-        with open(ecg_image.temporary_file_path(), "rb") as img_file:
-            base64_image = base64.b64encode(img_file.read()).decode('utf-8')
+        
+        # Read the image file content as base64
+        try:
+            ecg_image.seek(0)  # Ensure the file pointer is at the beginning
+            base64_image = base64.b64encode(ecg_image.read()).decode('utf-8')
+        except Exception as e:
+            raise serializers.ValidationError(f"Failed to read the uploaded file: {e}")
 
         response = requests.post(fastapi_url, json={'file': base64_image})
 
