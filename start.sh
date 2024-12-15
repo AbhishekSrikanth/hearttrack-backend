@@ -9,9 +9,9 @@ python manage.py migrate
 # Create admin user if it doesn't exist
 echo "Checking if admin user exists..."
 python manage.py shell << END
-from django.contrib.auth.models import User
-if not User.objects.filter(username='admin').exists():
-    User.objects.create_superuser('admin', 'admin@ht.com', 'admin')
+from users.models import CustomUser
+if not CustomUser.objects.filter(username='admin').exists():
+    CustomUser.objects.create_superuser('admin', 'admin@ht.com', 'admin')
     print("Admin user created!")
 else:
     print("Admin user already exists.")
