@@ -159,8 +159,8 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost",  # Trust all localhost ports
 ]
 
-CSRF_TRUSTED_ORIGIN_REGEXES = [
-    r"^http://localhost:\d+$",  # Regex to match any localhost with a port
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000", 
 ]
 
 SESSION_COOKIE_SAMESITE = 'Lax'  # Adjust based on your requirements
