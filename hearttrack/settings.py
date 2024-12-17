@@ -145,5 +145,24 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True  # Allow credentials (cookies) to be sent with requests
+CORS_ALLOW_ALL_ORIGINS = False  # Do not allow all origins, ensure specific rules
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost",  # Allow localhost on any port
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^http://localhost:\d+$",  # Regex to match any localhost with a port
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost",  # Trust all localhost ports
+]
+
+CSRF_TRUSTED_ORIGIN_REGEXES = [
+    r"^http://localhost:\d+$",  # Regex to match any localhost with a port
+]
+
+SESSION_COOKIE_SAMESITE = 'Lax'  # Adjust based on your requirements
+CSRF_COOKIE_SAMESITE = 'Lax'  # Adjust based on your requirements
+CSRF_COOKIE_HTTPONLY = False  # Allow access from JavaScript if needed
