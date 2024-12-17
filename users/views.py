@@ -101,7 +101,7 @@ class LoginView(APIView):
                         "last_name": user.last_name,
                         "role": user.role
                     }
-                }
+                })
             else:
                 return Response({"error": "User is inactive"}, status=status.HTTP_403_FORBIDDEN)
         return Response({"error": "Invalid username or password"}, status=status.HTTP_401_UNAUTHORIZED)
