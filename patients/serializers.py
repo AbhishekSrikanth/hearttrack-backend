@@ -4,7 +4,7 @@ from predictions.serializers import ECGPredictionSerializer
 
 class PatientSerializer(serializers.ModelSerializer):
     doctor = serializers.StringRelatedField(read_only=True)  # Read-only field for the doctor username
-    predictions = ECGPredictionSerializer(many=True, read_only=True, source='predictions')  # Add related predictions
+    predictions = ECGPredictionSerializer(many=True, read_only=True)  # Add related predictions
 
     class Meta:
         model = Patient
