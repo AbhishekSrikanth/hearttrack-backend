@@ -92,7 +92,16 @@ class LoginView(APIView):
             if user.is_active:
                 login(request, user)
                 update_last_login(None, user)
-                return Response({"message": "Login successful"}, status=status.HTTP_200_OK)
+                # Return user details
+                return Response({
+                    "message": "Login successful",
+                    "user": {
+                        "id": user.id,
+                        "first_name": user.first_name,
+                        "last_name": user.last_name,
+                        "role": user.role
+                    }
+                }
             else:
                 return Response({"error": "User is inactive"}, status=status.HTTP_403_FORBIDDEN)
         return Response({"error": "Invalid username or password"}, status=status.HTTP_401_UNAUTHORIZED)
